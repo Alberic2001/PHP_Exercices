@@ -13,9 +13,11 @@ class Validator {
 
  // Longueur et Largueur doivent etre numeric(entier,reel)
  public function is_number($nombre,$key,$errorMessage="Veuiller saisir un nombre"){
-    if(!is_numeric($nombre)){
-        $this->errors[$key]= $errorMessage;
-    }
+    $this->is_empty($nombre,$key);
+    if($this->is_valid()){
+        if(!is_numeric($nombre)){
+            $this->errors[$key]= $errorMessage;
+        }
 }
 
 /*
