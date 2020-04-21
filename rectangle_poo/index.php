@@ -60,10 +60,10 @@ $largeur="";
         $longueur=$_POST['longueur'];
         $largeur=$_POST['largeur'];
 
-          $validator->is_empty($longueur,'longueur');
-          $validator->is_empty($largeur,'largeur');
+          //$validator->is_empty($longueur,'longueur');
+          //$validator->is_empty($largeur,'largeur');
          
-         if($validator->is_valid()){
+         //if($validator->is_valid()){
             $validator->compare($longueur,$largeur,'longueur','largeur');
             if($validator->is_valid()){
                     /* 
@@ -79,8 +79,9 @@ $largeur="";
                       $_SESSION['id']=$id;
 
             }
-         }
+         //}
          $errors=$validator->getErrors();
+         var_dump($errors);
 
             if(isset($errors['longueur'])){
                 $longueur="";
