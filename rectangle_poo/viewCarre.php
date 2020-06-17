@@ -39,7 +39,7 @@
 
    ///session_destroy();
 
-    if( isset($_POST['btn_submit'])){
+    if(isset($_POST['btn_submit'])){
 
         if($_POST['btn_submit']==="calcul"){
 
@@ -49,13 +49,12 @@
       
           $validator->is_empty($longueur,'longueur');
          if($validator->is_valid()){
-                   $validator->is_positif( $longueur,'longueur');
+                   $validator->is_positif($longueur,'longueur');
                    if($validator->is_valid()){
                       $carre=new Carre($longueur);
                       $id= $_SESSION['id'];
                       $id++;
                       $_SESSION["Resultat".$id]=$carre;
-                    
                       $_SESSION['id']=$id;
                    }
            
@@ -86,13 +85,11 @@
                          <input type="text" class="form-control" name="longueur" value="<?=$longueur?>" id="inputName" placeholder="">
                      </div>
             <?php if(isset($errors['longueur'])){
-
-
             ?>
                      <div class="alert alert-danger col-4">
                          <strong>Erreur</strong> <?php echo $errors['longueur'];?>
                      </div>
-             <?php
+            <?php
             }
             ?>
 
@@ -109,9 +106,7 @@
                  </div>
              </form>
          </div>
-<?php
-      if( isset($_POST['btn_submit']) && $_POST['btn_submit']==="calcul" && count($errors)===0) {
-?>
+
         <table class="table container table-bordered">
             <thead>
                 <tr>
@@ -123,8 +118,10 @@
             </thead>
             <tbody>
             <?php
+            if(empty($_SESSION) === false){
                 foreach ($_SESSION as $key=> $carre) {
-                    if($key!=="id")  {
+                        if($key!=="id"){
+                            if(get_class($_SESSION[$key])==="Carre"){
             ?>
                 <tr>
                     <td scope="row"><?=$carre->demiPerimetre()?></td>
@@ -136,11 +133,10 @@
                 <?php
                 }
                 }
+                }
+                }
                 ?>
 
             </tbody>
         </table>
 
-    <?php
-       }
- ?>

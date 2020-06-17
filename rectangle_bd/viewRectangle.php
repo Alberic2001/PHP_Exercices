@@ -1,43 +1,5 @@
-<!--
-   1) Saisir la longueur et largeur d'un Rectangle à partir d'un formulaire
-         Longueur et Largueur doivent etre numeric(entier,reel)
-         Longueur positif
-         Largeur positif
-         Longueur> Largeur
-
-   2)Traitements=>U.C
-      -Caluler le Dp
-      -Calculer le P
-      -Calculer la S
-      -Calculer la Diagonale
-
-
-      //Premire Heure
-         1-Afficher les erreurs
-         2-Garder les Bonnes Valeurs et effacer les Mauvaises Valeurs
-         3-Session => $_SESSION
-            //Ouvrir session_start()
-            //Fermer la Session session_destroy()
-            // $_SESSION est un tableau Associatif
-
-      //Deuxieme Heure
-
-      //POO en PHP=>Rectangle
-         1-Classe(Concrete ou Abstraite ou Interface)
-            a)Attribut(Instance ou Classe)
-            a)Methode(Instance ou Classe)
-         2-Objet
-
-         //Nommination
-           Classe => MaClasse
-           methode=> maMethode
-           attribut=> monattribut
-
- -->
- <?php
-
-
-   ///session_destroy();
+<?php
+    $entityManager=new RectangleManager();
 
     if( isset($_POST['btn_submit'])){
 
@@ -54,17 +16,9 @@
          if($validator->is_valid()){
             $validator->compare($longueur,$largeur,'longueur','largeur');
             if($validator->is_valid()){
-                    /* 
-                     $rectangle=new Rectangle();
-                     $rectangle->setLongueur($longueur);
-                     $rectangle->setLargeur($largeur);
-                     */   
-                      $rectangle=new Rectangle($longueur,$largeur);
-                      $id= $_SESSION['id'];
-                      $id++;
-                      $_SESSION["Resultat".$id]=$rectangle;
-                    
-                      $_SESSION['id']=$id;
+                $rectangle=new Rectangle($largeur);
+                $rectangle->setLongueur($longueur);
+                $entityManager->create($rectangle);
 
             }
          }
@@ -146,31 +100,37 @@
              </form>
          </div>
 <?php
-      if( isset($_POST['btn_submit']) && $_POST['btn_submit']==="calcul" && count($errors)===0) {
+
+    $rectangles=$entityManager->findAll();
+    var_dump($rectangles);
+      if(count($rectangles)>0) {
 ?>
         <table class="table container table-bordered">
             <thead>
                 <tr>
                     <th>Demi-Perimetre</th>
-                    <th>Preimetre</th>
+                    <th>Perimetre</th>
                     <th>Surface</th>
                     <th>Diagonale</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             <?php
-                foreach ($_SESSION as $key=> $rectangle) {
-                    if($key!=="id")  {
+                foreach ($rectangles as $key => $rectangle) {
             ?>
                 <tr>
                     <td scope="row"><?=$rectangle->demiPerimetre()?></td>
                     <td><?=$rectangle->perimetre()?></td>
                     <td><?=$rectangle->surface()?></td>
                     <td><?=$rectangle->diagonale()?></td>
+                    <td>
+                        <a name="" id="" class="btn btn-success col-5" href="#" role="button">Edit</a>
+                        <a name="" id="" class="btn btn-danger col-5" href="#" role="button">Delete</a>
+                    </td>
                 </tr>
 
                 <?php
-                }
                 }
                 ?>
 

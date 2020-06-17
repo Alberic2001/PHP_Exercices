@@ -7,6 +7,7 @@ require_once("Rectangle.php");
 require_once("Carre.php");
 //Acces BD
 require_once("CarreManager.php");
+require_once("RectangleManager.php");
 
 $errors=[];
 $resultat=[];

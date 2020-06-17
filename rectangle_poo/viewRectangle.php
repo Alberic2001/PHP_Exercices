@@ -48,17 +48,9 @@
         $longueur=$_POST['longueur'];
         $largeur=$_POST['largeur'];
 
-          $validator->is_empty($longueur,'longueur');
-          $validator->is_empty($largeur,'largeur');
-         
-         if($validator->is_valid()){
+          
             $validator->compare($longueur,$largeur,'longueur','largeur');
             if($validator->is_valid()){
-                    /* 
-                     $rectangle=new Rectangle();
-                     $rectangle->setLongueur($longueur);
-                     $rectangle->setLargeur($largeur);
-                     */   
                       $rectangle=new Rectangle($longueur,$largeur);
                       $id= $_SESSION['id'];
                       $id++;
@@ -67,7 +59,7 @@
                       $_SESSION['id']=$id;
 
             }
-         }
+         
          $errors=$validator->getErrors();
 
             if(isset($errors['longueur'])){
@@ -145,22 +137,23 @@
                  </div>
              </form>
          </div>
-<?php
-      if( isset($_POST['btn_submit']) && $_POST['btn_submit']==="calcul" && count($errors)===0) {
-?>
+
         <table class="table container table-bordered">
             <thead>
                 <tr>
                     <th>Demi-Perimetre</th>
-                    <th>Preimetre</th>
+                    <th>Perimetre</th>
                     <th>Surface</th>
                     <th>Diagonale</th>
                 </tr>
             </thead>
             <tbody>
             <?php
+            if(empty($_SESSION) === false){
                 foreach ($_SESSION as $key=> $rectangle) {
-                    if($key!=="id")  {
+                    if($key!=="id"){
+                        if(get_class($_SESSION[$key])==="Rectangle"){
+                    
             ?>
                 <tr>
                     <td scope="row"><?=$rectangle->demiPerimetre()?></td>
@@ -172,11 +165,10 @@
                 <?php
                 }
                 }
+                }
+            }
+                var_dump($_SESSION);
                 ?>
 
             </tbody>
         </table>
-
-    <?php
-       }
- ?>

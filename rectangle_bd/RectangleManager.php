@@ -9,7 +9,9 @@ class RectangleManager extends MysqlBd{
     }
 
     public function create($data){
-        $sql="insert into rectangle......";
+        $sql="insert into rectangle (longueur, largeur) values (".$data->getLongueur().",".$data->getLargeur().")";
+        //die($sql);
+        return $this->ExecuteUpdate($sql)!=0;
         
     }
 
@@ -23,7 +25,7 @@ class RectangleManager extends MysqlBd{
 
     public function findAll(){
        $sql="select * from rectangle";
-       $this->ExecuteSelect($sql); 
+       return $this->ExecuteSelect($sql); 
     }
     public function findById($id){
         $sql="select * from rectangle where id =$id"; 
